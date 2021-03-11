@@ -85,6 +85,10 @@ public extension PanModalPresentable where Self: UIViewController {
         return true
     }
 
+    var backgroundInteraction: PanModalBackgroundInteraction {
+        return self.allowsTapToDismiss ? .dismiss : .none
+    }
+    
     var isUserInteractionEnabled: Bool {
         return true
     }
