@@ -45,6 +45,17 @@ public protocol PanModalPresentable: AnyObject {
      */
     var shortFormHeight: PanModalHeight { get }
 
+    
+    /**
+     The height of the pan modal container view
+     when in the mediumForm presentation state.
+
+     This value is capped to .max, if provided value exceeds the space available.
+
+     Default value is the longFormHeight.
+     */
+    var mediumFormHeight: PanModalHeight { get }
+
     /**
      The height of the pan modal container view
      when in the longForm presentation state.
@@ -150,7 +161,7 @@ public protocol PanModalPresentable: AnyObject {
      Default is true.
     */
     var isUserInteractionEnabled: Bool { get }
-
+    
     /**
      A flag to determine if haptic feedback should be enabled during presentation.
 
