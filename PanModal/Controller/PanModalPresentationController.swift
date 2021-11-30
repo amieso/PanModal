@@ -504,10 +504,7 @@ private extension PanModalPresentationController {
      */
     func configureScrollViewInsets() {
 
-        guard
-            let scrollView = presentable?.panScrollable,
-            !scrollView.isScrolling
-            else { return }
+        guard let scrollView = presentable?.panScrollable else { return }
 
         /**
          Disable vertical scroll indicator until we start to scroll
