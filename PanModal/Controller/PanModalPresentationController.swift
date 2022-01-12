@@ -300,7 +300,8 @@ open class PanModalPresentationController: UIPresentationController {
                     to: self.presentedView,
                     opacity: presentable.shadowOpacity,
                     color: presentable.shadowColor,
-                    offset: presentable.shadowOffset
+                    offset: presentable.shadowOffset,
+                    radius: presentable.shadowRadius
                 )
             }
         })
@@ -423,7 +424,8 @@ private extension PanModalPresentationController {
                 to: self.presentedView,
                 opacity: presentable.shadowOpacity,
                 color: presentable.shadowColor,
-                offset: presentable.shadowOffset
+                offset: presentable.shadowOffset,
+                radius: presentable.shadowRadius
             )
         }
 
@@ -990,12 +992,13 @@ private extension PanModalPresentationController {
         view.layer.rasterizationScale = UIScreen.main.scale
     }
     
-    func addShadow(to view: UIView, opacity: Float, color: UIColor, offset: CGSize) {
+    func addShadow(to view: UIView, opacity: Float, color: UIColor, offset: CGSize, radius: CGFloat) {
         
         view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
         view.layer.shadowOpacity = opacity
         view.layer.shadowColor = color.cgColor
         view.layer.shadowOffset = offset
+        view.layer.shadowRadius = radius
     }
 }
 

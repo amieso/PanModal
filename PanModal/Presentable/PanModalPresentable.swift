@@ -209,6 +209,8 @@ public protocol PanModalPresentable: AnyObject {
     var shadowColor: UIColor { get }
     
     var shadowOffset: CGSize { get }
+    
+    var shadowRadius: CGFloat { get }
 
     /**
      Asks the delegate if the pan modal should respond to the pan modal gesture recognizer.
