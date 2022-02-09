@@ -93,6 +93,8 @@ class UserGroupViewController: UITableViewController, PanModalPresentable {
     var panScrollable: UIScrollView? {
         return tableView
     }
+    
+    var dynamicBackgroundFadeStartHeight: PanModalHeight { .contentHeight(100) }
 
     var shortFormHeight: PanModalHeight { mediumFormHeight }
     
