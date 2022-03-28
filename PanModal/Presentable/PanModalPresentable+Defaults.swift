@@ -116,6 +116,10 @@ public extension PanModalPresentable where Self: UIViewController {
     var shadowOffset: CGSize { CGSize(width: 0, height: -2) }
 
     var shadowRadius: CGFloat { 0 }
+    
+    func didAttemptDragToDismiss() {
+        
+    }
 
     func shouldRespond(to panModalGestureRecognizer: UIPanGestureRecognizer) -> Bool {
         return true
