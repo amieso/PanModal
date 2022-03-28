@@ -219,6 +219,11 @@ public protocol PanModalPresentable: AnyObject {
     var shadowOffset: CGSize { get }
     
     var shadowRadius: CGFloat { get }
+    
+    /**
+     A function that is called when `allowsDragToDismiss` is `false` and the user tries to drag to dismiss.
+     */
+    func didAttemptDragToDismiss() -> Void
 
     /**
      Asks the delegate if the pan modal should respond to the pan modal gesture recognizer.

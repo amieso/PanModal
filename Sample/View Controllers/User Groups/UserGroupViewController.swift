@@ -110,7 +110,12 @@ class UserGroupViewController: UITableViewController, PanModalPresentable {
     
     var shouldShowVerticalScrollIndicator: Bool { false }
     
-    var allowsDragToDismiss: Bool { true }
+    var allowsDragToDismiss: Bool { false }
+    
+    func didAttemptDragToDismiss() {
+        
+        print("attempt drag to dismiss")
+    }
         
     var anchorModalToLongForm: Bool {
         return false

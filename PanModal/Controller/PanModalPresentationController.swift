@@ -671,13 +671,19 @@ private extension PanModalPresentationController {
                     inValues: [mediumFormYPosition, longFormYPosition]
                 ) == mediumFormYPosition
 
-                if (isMediumFormNearest && isTallerThanShortForm) || presentable?.allowsDragToDismiss == false {
+                if (isMediumFormNearest && isTallerThanShortForm) {
 
                     transition(to: .shortForm)
                     return
                 }
                 
                 // Pan down - short -> dismiss
+                
+                if presentable?.allowsDragToDismiss == false {
+                    presentable?.didAttemptDragToDismiss()
+                    transition(to: .shortForm)
+                    return
+                }
 
                 presentedViewController.dismiss(animated: true)
 
@@ -696,9 +702,12 @@ private extension PanModalPresentationController {
                     transition(to: .longForm)
                 } else if position == mediumFormYPosition {
                     transition(to: .mediumForm)
-                } else if position == shortFormYPosition || presentable?.allowsDragToDismiss == false {
+                } else if position == shortFormYPosition {
                     transition(to: .shortForm)
-
+                } else if presentable?.allowsDragToDismiss == false {
+                    presentable?.didAttemptDragToDismiss()
+                    transition(to: .shortForm)
+                    return
                 } else {
                     presentedViewController.dismiss(animated: true)
                 }
