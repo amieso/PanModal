@@ -117,6 +117,10 @@ public extension PanModalPresentable where Self: UIViewController {
 
     var shadowRadius: CGFloat { 0 }
     
+    func didTapBackground() {
+        
+    }
+    
     func didAttemptDragToDismiss() {
         
     }

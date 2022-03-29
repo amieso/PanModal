@@ -146,6 +146,7 @@ open class PanModalPresentationController: UIPresentationController {
                 
             case .dismiss:
                 view.didTap = { [weak self] _ in
+                    self?.presentable?.didTapBackground()
                     self?.presentedViewController.dismiss(animated: true)
                 }
                 
@@ -160,6 +161,7 @@ open class PanModalPresentationController: UIPresentationController {
                 }
 
                 view.didTap = { [weak self] _ in
+                    self?.presentable?.didTapBackground()
                     guard let self = self else { return }
                     self.snap(toYPosition: self.shortFormYPosition)
                 }
@@ -176,12 +178,13 @@ open class PanModalPresentationController: UIPresentationController {
                 }
 
                 view.didTap = { [weak self] _ in
+                    self?.presentable?.didTapBackground()
                     guard let self = self else { return }
                     self.snap(toYPosition: self.shortFormYPosition)
                 }
 
             case .none:
-                break
+                view.didTap = { [weak self] _ in self?.presentable?.didTapBackground() }
             }
         }
         

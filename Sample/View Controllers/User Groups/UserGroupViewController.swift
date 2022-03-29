@@ -100,7 +100,7 @@ class UserGroupViewController: UITableViewController, PanModalPresentable {
     
     var mediumFormHeight: PanModalHeight { .contentHeight(300) }
     
-    var backgroundInteraction: PanModalBackgroundInteraction { .forwardToRoot }
+    var backgroundInteraction: PanModalBackgroundInteraction { .dismiss }
     
     var panModalBackgroundColor: UIColor { .black.withAlphaComponent(0.8) }
     
@@ -111,6 +111,11 @@ class UserGroupViewController: UITableViewController, PanModalPresentable {
     var shouldShowVerticalScrollIndicator: Bool { false }
     
     var allowsDragToDismiss: Bool { false }
+    
+    func didTapBackground() {
+        
+        print("did tap background")
+    }
     
     func didAttemptDragToDismiss() {
         

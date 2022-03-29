@@ -221,6 +221,11 @@ public protocol PanModalPresentable: AnyObject {
     var shadowRadius: CGFloat { get }
     
     /**
+     A function that is called when user taps the dimmed background.
+     */
+    func didTapBackground() -> Void
+    
+    /**
      A function that is called when `allowsDragToDismiss` is `false` and the user tries to drag to dismiss.
      */
     func didAttemptDragToDismiss() -> Void
