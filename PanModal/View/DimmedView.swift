@@ -58,6 +58,20 @@ public class DimmedView: UIView {
             }
         }
     }
+    
+    /**
+     The closure to be executed when a drop session enter occurs
+     */
+    var dropSessionDidEnter: (() -> Void)? {
+        didSet {
+            guard #available(iOS 11.0, *) else { return }
+            if self.dropSessionDidEnter != nil {
+                addInteraction(dropInteraction)
+            } else {
+                removeInteraction(dropInteraction)
+            }
+        }
+    }
 
     /**
      Tap gesture recognizer
@@ -65,6 +79,12 @@ public class DimmedView: UIView {
     private lazy var tapGesture: UIGestureRecognizer = {
         return UITapGestureRecognizer(target: self, action: #selector(didTapView))
     }()
+    
+    /**
+     Drop interaction
+     */
+    @available(iOS 11.0, *)
+    private lazy var dropInteraction = UIDropInteraction(delegate: self)
     
     // MARK: - Initializers
 
@@ -88,6 +108,18 @@ public class DimmedView: UIView {
     @objc private func didTapView() {
         didTap?(tapGesture)
     }
-
 }
+
+@available(iOS 11.0, *)
+extension DimmedView: UIDropInteractionDelegate {
+    
+    public func dropInteraction(
+        _ interaction: UIDropInteraction,
+        sessionDidEnter session: UIDropSession
+    ) {
+        
+        dropSessionDidEnter?()
+    }
+}
+
 #endif

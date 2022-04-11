@@ -229,6 +229,11 @@ public protocol PanModalPresentable: AnyObject {
      A function that is called when `allowsDragToDismiss` is `false` and the user tries to drag to dismiss.
      */
     func didAttemptDragToDismiss() -> Void
+    
+    /**
+     A function that is called when the drop session enters the background.
+     */
+    func didDropSessionEnterBackground() -> Void
 
     /**
      Asks the delegate if the pan modal should respond to the pan modal gesture recognizer.
