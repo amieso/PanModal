@@ -124,6 +124,10 @@ public extension PanModalPresentable where Self: UIViewController {
     func didAttemptDragToDismiss() {
         
     }
+    
+    func didDropSessionEnterBackground() {
+        
+    }
 
     func shouldRespond(to panModalGestureRecognizer: UIPanGestureRecognizer) -> Bool {
         return true

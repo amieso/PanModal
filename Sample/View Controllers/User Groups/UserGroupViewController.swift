@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserGroupViewController: UITableViewController, PanModalPresentable {
+class UserGroupViewController: UITableViewController, UITableViewDragDelegate, PanModalPresentable {
 
     let members: [UserGroupMemberPresentable] = [
         UserGroupMemberPresentable(name: "Naida Schill ✈️", role: "Staff Engineer - Mobile DevXP", avatarBackgroundColor: #colorLiteral(red: 0.7215686275, green: 0.9098039216, blue: 0.5607843137, alpha: 1)),
@@ -54,6 +54,10 @@ class UserGroupViewController: UITableViewController, PanModalPresentable {
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = #colorLiteral(red: 0.1019607843, green: 0.1137254902, blue: 0.1294117647, alpha: 1)
+        if #available(iOS 11.0, *) {
+            tableView.dragInteractionEnabled = true
+            tableView.dragDelegate = self
+        }
         tableView.register(UserGroupMemberCell.self, forCellReuseIdentifier: "cell")
     }
 
@@ -86,6 +90,20 @@ class UserGroupViewController: UITableViewController, PanModalPresentable {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         presentPanModal(UserGroupViewController())
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    // MARK: - UITableViewDragDelegate
+    
+    @available(iOS 11.0, *)
+    func tableView(
+        _ tableView: UITableView,
+        itemsForBeginning session: UIDragSession,
+        at indexPath: IndexPath
+    ) -> [UIDragItem] {
+        
+        let dragItem = UIDragItem(itemProvider: NSItemProvider())
+        dragItem.localObject = members[indexPath.row]
+        return [dragItem]
     }
 
     // MARK: - Pan Modal Presentable
@@ -122,6 +140,11 @@ class UserGroupViewController: UITableViewController, PanModalPresentable {
         print("attempt drag to dismiss")
     }
         
+    func didDropSessionEnterBackground() {
+        
+        print(">>> didDropSessionEnterBackground")
+    }
+    
     var anchorModalToLongForm: Bool {
         return false
     }

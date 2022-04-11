@@ -136,20 +136,23 @@ open class PanModalPresentationController: UIPresentationController {
                     let converted = viewController.view.convert(point, from: view)
                     return viewController.view.hitTest(converted, with: event)
                 }
-                            
+                view.dropSessionDidEnter = { [weak self] in self?.presentable?.didDropSessionEnterBackground() }
+
             case .forwardToRoot:
                 view.hitTestHandler = { [weak self] (point, event) in
                     guard let viewController = self?.rootPresentingViewController else { return nil }
                     let converted = viewController.view.convert(point, from: view)
                     return viewController.view.hitTest(converted, with: event)
                 }
-                
+                view.dropSessionDidEnter = { [weak self] in self?.presentable?.didDropSessionEnterBackground() }
+
             case .dismiss:
                 view.didTap = { [weak self] _ in
                     self?.presentable?.didTapBackground()
                     self?.presentedViewController.dismiss(animated: true)
                 }
-                
+                view.dropSessionDidEnter = { [weak self] in self?.presentable?.didDropSessionEnterBackground() }
+
             case .transitionToShortFormOrForwardToParent:
                 view.hitTestHandler = { [weak self] (point, event) in
                     guard
@@ -166,6 +169,8 @@ open class PanModalPresentationController: UIPresentationController {
                     self.snap(toYPosition: self.shortFormYPosition)
                 }
                 
+                view.dropSessionDidEnter = { [weak self] in self?.presentable?.didDropSessionEnterBackground() }
+
             case .transitionToShortFormOrForwardToRoot:
                 view.hitTestHandler = { [weak self] (point, event) in
                     guard
@@ -182,9 +187,12 @@ open class PanModalPresentationController: UIPresentationController {
                     guard let self = self else { return }
                     self.snap(toYPosition: self.shortFormYPosition)
                 }
+                
+                view.dropSessionDidEnter = { [weak self] in self?.presentable?.didDropSessionEnterBackground() }
 
             case .none:
                 view.didTap = { [weak self] _ in self?.presentable?.didTapBackground() }
+                view.dropSessionDidEnter = { [weak self] in self?.presentable?.didDropSessionEnterBackground() }
             }
         }
         
