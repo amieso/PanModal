@@ -923,7 +923,19 @@ private extension PanModalPresentationController {
             !presentedViewController.isBeingPresented
             else { return }
 
-        if !isPresentedViewAnchored && scrollView.contentOffset.y > 0 {
+        let maxYOffset = scrollView.contentSize.height
+            - scrollView.bounds.height
+            + scrollView.contentInset.bottom
+        
+        if scrollViewYOffset > maxYOffset {
+            
+            /**
+             If the max Y offset is larger than the previously saved one, we need to
+             reset it
+             */
+            trackScrolling(scrollView)
+            
+        } else if !isPresentedViewAnchored && scrollView.contentOffset.y > 0 {
 
             /**
              Hold the scrollView in place if we're actively scrolling and not handling top bounce
