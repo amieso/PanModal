@@ -923,12 +923,14 @@ private extension PanModalPresentationController {
             !presentedViewController.isBeingPresented
             else { return }
 
-        let maxYOffset = scrollView.contentSize.height
+        let _maxYOffset = scrollView.contentSize.height
             - scrollView.bounds.height
             + scrollView.contentInset.bottom
         
+        let maxYOffset = max(0, _maxYOffset)
+
         if scrollViewYOffset > maxYOffset {
-            
+
             /**
              If the max Y offset is larger than the previously saved one, we need to
              reset it
