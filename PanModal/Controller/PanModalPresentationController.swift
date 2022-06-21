@@ -573,7 +573,9 @@ private extension PanModalPresentationController {
         
         let bottomSafeAreaHeight: CGFloat = {
             if #available(iOS 11.0, *) {
-                return presentingViewController.view.safeAreaInsets.bottom
+                // Accessing `presentingViewController.view` can cause a crash if the view
+                // is not loaded (e.g. when the app going to the background)
+                return presentingViewController.viewIfLoaded?.safeAreaInsets.bottom ?? 0
             } else {
                 return presentingViewController.bottomLayoutGuide.length
             }
