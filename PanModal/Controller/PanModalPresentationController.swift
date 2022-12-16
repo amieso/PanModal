@@ -823,12 +823,14 @@ private extension PanModalPresentationController {
     func snap(toYPosition yPos: CGFloat, completion: (() -> Void)? = nil) {
         PanModalAnimator.animate(
             { [weak self] in
-                self?.adjust(toYPosition: yPos)
-                self?.isPresentedViewAnimating = true
+                guard let self = self else { return }
+                let didAdjust = self.adjust(toYPosition: yPos)
+                self.isPresentedViewAnimating = didAdjust
             },
             config: presentable
         ) { [weak self] didComplete in
-            self?.isPresentedViewAnimating = !didComplete
+            guard let self = self else { return }
+            self.isPresentedViewAnimating = self.isPresentedViewAnimating && !didComplete
             if didComplete { completion?() }
         }
     }
@@ -836,13 +838,16 @@ private extension PanModalPresentationController {
     /**
      Sets the y position of the presentedView & adjusts the backgroundView.
      */
-    func adjust(toYPosition yPos: CGFloat) {
-        presentedView.frame.origin.y = max(yPos, anchoredYPosition)
-        
+    @discardableResult
+    func adjust(toYPosition yPos: CGFloat) -> Bool {
+        let adjustedYPos = max(yPos, anchoredYPosition)
+        guard presentedView.frame.origin.y != adjustedYPos else { return false }
+        presentedView.frame.origin.y = adjustedYPos
+
         guard presentedView.frame.origin.y >= longFormYPosition else {
             backgroundView.dimState = .max
             updateProgress(for: longFormYPosition)
-            return
+            return true
         }
         
         updateProgress(for: presentedView.frame.origin.y)
@@ -851,7 +856,7 @@ private extension PanModalPresentationController {
             let yDisplacementFromShortForm = presentedView.frame.origin.y - shortFormYPosition
             let yDisplacementFromShortFormRatio = 1.0 - (yDisplacementFromShortForm / presentedView.frame.height)
             backgroundView.dimState = .percent(yDisplacementFromShortFormRatio)
-            return
+            return true
         }
 
         /**
@@ -863,6 +868,7 @@ private extension PanModalPresentationController {
         let yDisplacementFromLongForm = yDistanceFromLongToBackgroundFadeForm - (dynamicBackgroundFadeYPosition - presentedView.frame.origin.y)
         let yDisplacementFromLongFormRatio = 1.0 - (yDisplacementFromLongForm / yDistanceFromLongToBackgroundFadeForm)
         backgroundView.dimState = .percent(yDisplacementFromLongFormRatio)
+        return true
     }
     
     func updateProgress(for originY: CGFloat) {
