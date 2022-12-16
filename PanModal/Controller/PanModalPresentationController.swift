@@ -980,6 +980,16 @@ private extension PanModalPresentationController {
     func haltScrolling(_ scrollView: UIScrollView) {
         scrollView.setContentOffset(CGPoint(x: 0, y: scrollViewYOffset), animated: false)
         scrollView.showsVerticalScrollIndicator = false
+        
+        print(">>> >>>-------------------")
+        print(">>> scrollViewYOffset \(scrollViewYOffset)")
+        print(">>> scrollView.contentSize.height \(scrollView.contentSize.height)")
+
+        let point = CGPoint(x: 0, y: min(scrollViewYOffset.rounded(), scrollView.contentSize.height))
+        if presentedViewController.isPanModalPresented && point != scrollView.contentOffset {
+            scrollView.setContentOffset(point, animated: false)
+            scrollView.showsVerticalScrollIndicator = false
+        }
     }
 
     /**
