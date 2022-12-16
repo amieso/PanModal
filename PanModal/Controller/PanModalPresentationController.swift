@@ -984,6 +984,7 @@ private extension PanModalPresentationController {
         print(">>> >>>-------------------")
         print(">>> scrollViewYOffset \(scrollViewYOffset)")
         print(">>> scrollView.contentSize.height \(scrollView.contentSize.height)")
+        print(">>> scrollView.contentOffset \(scrollView.contentOffset)")
 
         let point = CGPoint(x: 0, y: min(scrollViewYOffset.rounded(), scrollView.contentSize.height))
         if presentedViewController.isPanModalPresented && point != scrollView.contentOffset {
