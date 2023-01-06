@@ -166,7 +166,7 @@ open class PanModalPresentationController: UIPresentationController {
                 view.didTap = { [weak self] _ in
                     self?.presentable?.didTapBackground()
                     guard let self = self else { return }
-                    self.snap(toYPosition: self.shortFormYPosition)
+                    self.transition(to: .shortForm)
                 }
                 
                 view.dropSessionDidEnter = { [weak self] in self?.presentable?.didDropSessionEnterBackground() }
@@ -185,7 +185,7 @@ open class PanModalPresentationController: UIPresentationController {
                 view.didTap = { [weak self] _ in
                     self?.presentable?.didTapBackground()
                     guard let self = self else { return }
-                    self.snap(toYPosition: self.shortFormYPosition)
+                    self.transition(to: .shortForm)
                 }
                 
                 view.dropSessionDidEnter = { [weak self] in self?.presentable?.didDropSessionEnterBackground() }
